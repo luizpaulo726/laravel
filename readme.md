@@ -2,25 +2,29 @@ Baixar
 Primeiro, clone o projeto:
 
 # clone
-git clone https://github.com/carlosfgti/crud-laravel-5.7.git
+git clone https://github.com/luizpaulo726/laravel.git
 
-# Acesse o 
-cd do projeto laravel
-Config
-# Instalar dependências
-instalação do compositor
+# Configugrações
+Acesse a pasta do projeto clonado pelo terminal(prompt de comando)
 
-# Criar arquivo .env
-cp .env.example .env
+# instalação
+Digite composer install
+
+# Criar Arquivo env
+Renomei o arquivo .env.example para .env
 
 # Gerar chave
-chave php artisan: gerar
+Digite php artisan key:generate
 
-# Executar migrações (tabelas e Seeders)
-php artisan migrate --seed
+# Banco 
+Crie um esquema no banco mysql , chamado laravel
 
-# Criar servidor
-php artesão servir
+# Migrates
+Digite php artisan migrate --seed
 
-# Acesse o projeto 
-http: // localhost: 8080
+# Servidor
+Digite php artisan migrate
+
+# Acesse
+http://127.0.0.1:8000 ou http://localhost:8000
+
