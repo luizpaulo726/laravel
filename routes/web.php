@@ -30,9 +30,12 @@ Route::get('/editoras/apagar/{id}', 'EditoraController@destroy');
 Route::get('/editoras/editar/{id}', 'EditoraController@edit');
 Route::post('/editoras/{id}', 'EditoraController@update');
 
-Route::get('/gen_literarios', 'GeneroLiterarioController@indexView');
+Route::get('/gen_literarios', 'GeneroLiterarioController@index');
 Route::get('/gen_literarios/create', 'GeneroLiterarioController@create');
+Route::post('/gen_literarios', 'GeneroLiterarioController@store');
 Route::get('/gen_literarios/apagar/{id}', 'GeneroLiterarioController@destroy');
+Route::get('/gen_literarios/editar/{id}', 'GeneroLiterarioController@edit');
+Route::post('/gen_literarios/{id}', 'GeneroLiterarioController@update');
 
 Route::get('/livros', 'LivroController@index');
 Route::get('/livros/create', 'LivroController@create');

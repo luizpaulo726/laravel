@@ -14,7 +14,7 @@
                 @endif
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <button type="cancel" class="btn btn-danger btn-sm">Cancelar</button>
+            <a type="btn btn-primary btn-sm" class="btn btn-danger btn-sm" href="/editoras">Cancelar</a>
         </form>
     </div>
 </div>

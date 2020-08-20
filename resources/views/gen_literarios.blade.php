@@ -1,114 +1,49 @@
 
-@extends('layout.app',["current" => "generos_literarios"])
+@extends('layout.app',["current" => "gen_literarios"])
 @section('body')
+
+@if(session('mensagem'))
+    <div class="alert alert-success">
+        <p>{{session('mensagem')}}</p>
+    </div>
+@endif
+
+@if(session('mensagem_erro'))
+    <div class="alert alert-danger">
+        <p>{{session('mensagem_erro')}}</p>
+    </div>
+@endif
 
 <div class="card border">
     <div class="card-body">
-        <h5 class="card-title">Cadastro de Gêneros Literários</h5>
-            <table class="table table-ordered table-hover" id="tabelaGenLiterarios">
+        <h5 class="card-title">Cadastro de Gêneros literários</h5>
+        @if(count($GeneroLiterarios) > 0)
+            <table class="table table-ordered table-hover">
                 <thead>
-                <th>Código</th>
                 <th>Descricão</th>
                 <th>Ações</th>
                 </thead>
                 <tbody>
-
+                
+                @foreach($GeneroLiterarios as $gen_literario)
+                    <tr>
+                        <td>{{$gen_literario->descricao}}</td>
+                        <td>
+                            <a href="/gen_literarios/editar/{{$gen_literario->id}}" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="/gen_literarios/apagar/{{$gen_literario->id}}" class="btn btn-sm btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                @endforeach 
                 </tbody>
             </table>
+            @else
+            <div class="alert alert-danger" role="alert">
+               Nenhum genero literario encontrada!
+            </div>
+        @endif
     </div>
     <div class="card-footer">
-        <button onclick="novoGeneroLiterario()" class="btn btn-sm btn-primary">Novo Gênero Literário</button> 
+        <a href="/gen_literarios/create" class="btn btn-sm btn-primary">Novo Genero Literario</a> 
     </div>
 </div>
-
-<div class="modal" tabindex="-1" role="dialog" id="dlgGenerosLiterarios" >
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form class="form-horizontal" id="formGenLiterario">
-                <div class="modal-header">
-                    <h5 class="modal-title">Novo Gênero Literário</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nomeAutor">Descrição</label>
-                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição" >
-                     </div>
-                     <input type="hidden" name="id"/>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                   <button type="cancel" class="btn btn-danger btn-sm" data-dismiss="modal">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endsection
-
-@section('javascript')
-<script type="text/javascript">
-
-    $.ajaxSetup({
-        headers:{
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        }
-    });
-
-
-    function criarGeneroLiterario() {
-        gen = {
-            descricao : $("#descricao").val()
-        };
-        
-        $.post('/api/gen_literarios',gen,function(data){
-          var gen = data;  
-          linha = montarLinha(gen);
-          $('#tabelaGenLiterarios>tbody').append(linha);
-
-        });
-    }
-        $("#formGenLiterario").submit(function(event){
-            event.preventDefault();
-            criarGeneroLiterario();
-            $("#dlgGenerosLiterarios").modal('hide'); 
-        
-        });
-    
-
-    function novoGeneroLiterario() {
-        $('#formGenLiterario')[0].reset();
-        $("#dlgGenerosLiterarios").modal('show');
-    }
-
-    function carregarGenLiterarios() {
-        $.getJSON('/api/gen_literarios',function(generos_literarios){
-            for(i=0;i<generos_literarios.length;i++){
-                linha = montarLinha(generos_literarios[i]);
-              
-                $('#tabelaGenLiterarios>tbody').append(linha);
-            }
-        });
-    }
-
-    function montarLinha(g) {
-     
-        var linha =
-         "<tr>" +
-            "<td>" + g.id + "</td>" +
-            "<td>" + g.descricao + "</td>"+
-            "<td><button class='btn btn-sm btn-primary' style='margin-right:3px'>Editar</button>"+
-            "<button class='btn btn-sm btn-danger'>Excluir</button>"+
-            "</td>"+
-        "</tr>";
-        console.log(linha);
-        return linha;
-    }
-
-
-    $(function(){
-        carregarGenLiterarios();
-    });
-
-</script>
-
 @endsection
